@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import Form from './components/Form';
 import axios from 'axios';
+import WeatherCard from './components/WeatherCard';
+import './index.css';
+
 
 export default class App extends Component {
 
   state = {
-    temperature: undefined,
+    temperature: [],
     city: undefined,
     country: undefined,
-    description: undefined,
     error: undefined
   }
 
@@ -16,16 +18,20 @@ export default class App extends Component {
     e.preventDefault();
     const city = e.target.elements.city.value;
     const country = e.target.elements.country.value;
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`)
+    axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city},${country}&key=${API_KEY}&days=7`)
       .then(res => {
         const data = res.data;
-        console.log(data);
+        const days = data.data;
+        //console.log(data);
+        const temp = [];
+        days.map(date => (
+          temp.push(date.temp)
+        ))
+        //console.log(temp);
         this.setState({
-          temperature: data.main.temp,
-          city: data.name,
-          country: data.main.temp,
-          humidity: data.main.temp,
-          description: data.weather[0].description,
+          temperature: [...temp],
+          city: res.city_name,
+          country: res.country_code,
           error: ''
         })
       })
@@ -34,22 +40,19 @@ export default class App extends Component {
           temperature: undefined,
           city: undefined,
           country: undefined,
-          description: undefined,
-          error: 'wweewe'
+          error: 'Location could not be found.'
         })
       })
   }
 
   render() {
     return (
-      <div>
-        <Form getWeather={this.getWeather}/>
-        {this.state.temperature && <h1>Temp: {this.state.temperature}</h1>}
-        {this.state.city && <h1>City: {this.state.city}</h1>}
-        {this.state.country && <h1>Country: {this.state.country}</h1>}
-        {this.state.description && <h1>Desc: {this.state.description}</h1>}
-        {this.state.error && <h1>Error: {this.state.error}</h1>}
-      </div>
+      <>
+        <div className="form">
+          <Form getWeather={this.getWeather}/>
+        </div>
+        <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} />
+      </>     
     )
   }
 }
