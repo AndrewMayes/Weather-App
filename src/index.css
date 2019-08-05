@@ -2,6 +2,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 #root {
@@ -19,5 +20,5 @@ html, body {
 }
 
 .paper {
-  border: 1px green solid;
+  border: 5px red solid;
 }

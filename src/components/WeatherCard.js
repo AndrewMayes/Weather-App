@@ -5,10 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import weatherImg from '../imgs/partly_cloudy.png';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    textAlign: 'center'
-  },
   paper: {
     height: 250,
     width: 190,
@@ -34,7 +30,7 @@ const Weather = ({temp, city, country}) => {
                 <Paper className={classes.paper}>
                   <p>{day}</p>
                   <img src={weatherImg} alt="weather" />
-                  <p>{temp[index]}</p>
+                  <p>{temp[index]} &#176;</p>
                 </Paper>
               </Grid>
             ))}

@@ -4,7 +4,6 @@ import axios from 'axios';
 import WeatherCard from './components/WeatherCard';
 import './index.css';
 
-
 export default class App extends Component {
 
   state = {
@@ -22,22 +21,22 @@ export default class App extends Component {
       .then(res => {
         const data = res.data;
         const days = data.data;
-        //console.log(data);
         const temp = [];
+
         days.map(date => (
           temp.push(date.temp)
         ))
-        //console.log(temp);
+
         this.setState({
           temperature: [...temp],
-          city: res.city_name,
-          country: res.country_code,
+          city: data.city_name,
+          country: data.country_code,
           error: ''
         })
       })
       .catch(e => {
         this.setState({
-          temperature: undefined,
+          temperature: [],
           city: undefined,
           country: undefined,
           error: 'Location could not be found.'
@@ -51,7 +50,7 @@ export default class App extends Component {
         <div className="form">
           <Form getWeather={this.getWeather}/>
         </div>
-        <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} />
+        {this.state.city && <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} />}
       </>     
     )
   }
