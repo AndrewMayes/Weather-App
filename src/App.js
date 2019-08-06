@@ -4,6 +4,8 @@ import axios from 'axios';
 import WeatherCard from './components/WeatherCard';
 import './index.css';
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 export default class App extends Component {
 
   state = {
@@ -21,7 +23,7 @@ export default class App extends Component {
         const data = res.data;
         const days = data.data;
         const temp = [];
-        console.log(data)
+
         days.map(date => (
           temp.push(date.temp)
         ))
