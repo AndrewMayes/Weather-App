@@ -10,19 +10,18 @@ export default class App extends Component {
     temperature: [],
     city: undefined,
     country: undefined,
-    error: undefined
+    error: undefined,
+    unit: 'I'
   }
 
-  getWeather = e => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
-    axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city},${country}&key=${API_KEY}&days=7`)
+  getWeather = (city, country) => {
+    const unit = this.state.unit;
+    axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city},${country}&key=${API_KEY}&days=7&units=${unit}`)
       .then(res => {
         const data = res.data;
         const days = data.data;
         const temp = [];
-
+        console.log(data)
         days.map(date => (
           temp.push(date.temp)
         ))
@@ -44,13 +43,45 @@ export default class App extends Component {
       })
   }
 
+  convertToF = (celsius) => {
+    return ((celsius * 9/5) + 32);
+  }
+
+  convertToC = (fahrenheit) => {
+    return ((fahrenheit - 32) * (5/9));
+  }
+
+  setConversion = (unit) => {
+    const temp = this.state.temperature;
+    const newTemps = [];
+    let currentUnit = '';
+    
+    if (unit) {
+      temp.map(day => (
+        newTemps.push(this.convertToF(day).toFixed(1))
+      ))
+    } else {
+      temp.map(day => (
+        newTemps.push(this.convertToC(day).toFixed(1))
+      ))
+    }
+    
+    unit ? (currentUnit = 'I') : (currentUnit = 'M')
+
+    this.setState({
+      temperature: [...newTemps],
+      unit: currentUnit
+    })
+  }
+
   render() {
     return (
       <>
         <div className="form">
-          <Form getWeather={this.getWeather}/>
+          <Form getWeather={this.getWeather} setConversion={this.setConversion}/>
         </div>
-        {this.state.city && <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} />}
+        {this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
+        {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} /> : <p>{this.state.error}</p>}
       </>     
     )
   }
