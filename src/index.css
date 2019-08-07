@@ -3,6 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background: #5daeff;
 }
 
 #root {
@@ -16,9 +17,13 @@ html, body {
   border: 1px black solid;
   margin: 60px;
   padding: 20px;
-  background-color: pink;
+  background-color: #82b4e6;
 }
 
 .paper {
   border: 5px red solid;
+}
+
+.resultLocation {
+  font-size: 30px;
 }

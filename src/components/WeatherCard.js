@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     height: 250,
     width: 190,
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: 'black',
     '& p': {
       padding: 5,
       paddingTop: 10,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Weather = ({temp, city, country}) => {
+const Weather = ({temp, city, country, unit}) => {
   const classes = useStyles();
   const days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
   return (
@@ -30,7 +30,7 @@ const Weather = ({temp, city, country}) => {
                 <Paper className={classes.paper}>
                   <p>{day}</p>
                   <img src={weatherImg} alt="weather" />
-                  <p>{temp[index]} &#176;</p>
+                  <p>{temp[index]} &#176; {(unit === 'I') ? 'F' : 'C'}</p>
                 </Paper>
               </Grid>
             ))}

@@ -82,8 +82,10 @@ export default class App extends Component {
         <div className="form">
           <Form getWeather={this.getWeather} setConversion={this.setConversion}/>
         </div>
-        {this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
-        {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} /> : <p>{this.state.error}</p>}
+        <div className="resultLocation">
+          {this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
+        </div>
+        {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} /> : <p>{this.state.error}</p>}
       </>     
     )
   }
