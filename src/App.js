@@ -3,17 +3,20 @@ import Form from './components/Form';
 import axios from 'axios';
 import WeatherCard from './components/WeatherCard';
 import './index.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-export default class App extends Component {
+class App extends Component {
 
   state = {
     temperature: [],
     city: undefined,
     country: undefined,
     error: undefined,
-    unit: 'I'
+    unit: 'I',
+    precipitation: [],
+    date: []
   }
 
   getWeather = (city, country) => {
@@ -23,16 +26,22 @@ export default class App extends Component {
         const data = res.data;
         const days = data.data;
         const temp = [];
-
-        days.map(date => (
-          temp.push(date.temp)
-        ))
+        const prec = [];
+        const dates = [];
+        //console.log(data);
+        days.forEach(date => {
+          temp.push(date.temp);
+          prec.push(date.pop);
+          dates.push(date.datetime)
+        })
 
         this.setState({
           temperature: [...temp],
           city: data.city_name,
           country: data.country_code,
-          error: ''
+          error: '',
+          precipitation: [...prec],
+          date: [...dates]
         })
       })
       .catch(e => {
@@ -76,6 +85,10 @@ export default class App extends Component {
     })
   }
 
+  moreWeather = () => {
+    console.log('more weather here');
+  }
+
   render() {
     return (
       <>
@@ -85,9 +98,22 @@ export default class App extends Component {
         <div className="resultLocation">
           {this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
         </div>
-        {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} /> : <p>{this.state.error}</p>}
+        {this.state.error === '' ? <Link to="/weather" style={{ textDecoration: 'none' }}><WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} precipitation={this.state.precipitation} date={this.state.date}/></Link> : <p>{this.state.error}</p>}
       </>     
     )
   }
 }
+
+const Home = () => {
+  return (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={App}/>
+    </Switch>
+  </Router>
+  )
+}
+
+export default Home
+
 
