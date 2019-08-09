@@ -1,4 +1,5 @@
 [Live Demo](https://mayes-weather-app.herokuapp.com/)
+*Demo hosted on free version of heroku so initial load time will be long*
 
 ### Env File Format:
 ```bash
