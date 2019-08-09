@@ -16,7 +16,8 @@ class App extends Component {
     error: undefined,
     unit: 'I',
     precipitation: [],
-    date: []
+    date: [],
+    state: undefined
   }
 
   getWeather = (city, country) => {
@@ -28,7 +29,7 @@ class App extends Component {
         const temp = [];
         const prec = [];
         const dates = [];
-        //console.log(data);
+        console.log(data);
         days.forEach(date => {
           temp.push(date.temp);
           prec.push(date.pop);
@@ -41,7 +42,8 @@ class App extends Component {
           country: data.country_code,
           error: '',
           precipitation: [...prec],
-          date: [...dates]
+          date: [...dates],
+          state: data.state_code
         })
       })
       .catch(e => {
@@ -96,7 +98,8 @@ class App extends Component {
           <Form getWeather={this.getWeather} setConversion={this.setConversion}/>
         </div>
         <div className="resultLocation">
-          {this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
+          {/*Print state if country is US. Print country otherwise*/}
+          {(this.state.error === '' && this.state.country === 'US') ? <p>{this.state.city}, {this.state.state}</p> : this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
         </div>
         {this.state.error === '' ? <Link to="/weather" style={{ textDecoration: 'none' }}><WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} precipitation={this.state.precipitation} date={this.state.date}/></Link> : <p>{this.state.error}</p>}
       </>     
