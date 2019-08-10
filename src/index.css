@@ -14,10 +14,16 @@ html, body {
 }
 
 .form {
-  border: 1px black solid;
-  margin: 60px;
+  margin-top: 20px;
+  margin-bottom: 9px;
   padding: 20px;
-  background-color: #82b4e6;
+}
+
+.centerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px
 }
 
 .paper {
