@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import sunnyImg from '../imgs/sunny.svg';
 import rainyImg from '../imgs/rainy.svg';
+import snowyImg from '../imgs/snowy.svg';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Weather = ({temp, city, country, unit, onClick, precipitation, date}) => {
+const Weather = ({temp, city, country, unit, onClick, rain, date, snow}) => {
   const classes = useStyles();
   const days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
 
@@ -37,11 +38,14 @@ const Weather = ({temp, city, country, unit, onClick, precipitation, date}) => {
   } 
 
   //Uses probability of precipitation to determine which image to display for each weather card
-  const prec = (precipitation) => {
-    if (precipitation > 30) {
-      return (<img src={rainyImg} alt="rainy" />)
-    } else {
-      return (<img src={sunnyImg} alt="sunny" />)
+  const precipitation = (rain, snow) => {
+    switch (true) {
+      case (rain > 30):
+        return (<img src={rainyImg} alt="rainy" />)
+      case (snow > 0):
+          return (<img src={snowyImg} alt="rainy" />) 
+      default:
+        return (<img src={sunnyImg} alt="sunny" />)
     }
   }
 
@@ -53,7 +57,7 @@ const Weather = ({temp, city, country, unit, onClick, precipitation, date}) => {
               <Grid key={day} item>
                 <Paper className={classes.paper}>
                   <p>{setStartingDate(days)[index]}</p>
-                  {prec(precipitation[index])}
+                  {precipitation(rain[index], snow[index])}
                   <p>{temp[index]} &#176; {(unit === 'I') ? 'F' : 'C'}</p>
                 </Paper>
               </Grid>

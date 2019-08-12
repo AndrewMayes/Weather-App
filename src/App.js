@@ -4,6 +4,7 @@ import axios from 'axios';
 import WeatherCard from './components/WeatherCard';
 import './index.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Paper from '@material-ui/core/Paper';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -15,9 +16,10 @@ class App extends Component {
     country: undefined,
     error: undefined,
     unit: 'I',
-    precipitation: [],
+    rain: [],
     date: [],
-    state: undefined
+    state: undefined,
+    snow: []
   }
 
   getWeather = (city, country) => {
@@ -27,13 +29,15 @@ class App extends Component {
         const data = res.data;
         const days = data.data;
         const temp = [];
-        const prec = [];
+        const rain = [];
         const dates = [];
+        const snow = [];
         console.log(data);
         days.forEach(date => {
           temp.push(date.temp);
-          prec.push(date.pop);
-          dates.push(date.datetime)
+          rain.push(date.pop);
+          dates.push(date.datetime);
+          snow.push(date.snow);
         })
 
         this.setState({
@@ -41,9 +45,10 @@ class App extends Component {
           city: data.city_name,
           country: data.country_code,
           error: '',
-          precipitation: [...prec],
+          rain: [...rain],
           date: [...dates],
-          state: data.state_code
+          state: data.state_code,
+          snow: [...snow]
         })
       })
       .catch(e => {
@@ -99,9 +104,9 @@ class App extends Component {
         </div>
         <div className="resultLocation">
           {/*Print state if country is US. Print country otherwise*/}
-          {(this.state.error === '' && this.state.country === 'US') ? <p>{this.state.city}, {this.state.state}</p> : this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
+          {(this.state.error === '' && this.state.country === 'US') ? <Paper><p>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <p>{this.state.city}, {this.state.country}</p>}
         </div>
-        {this.state.error === '' ? <Link to="/weather" style={{ textDecoration: 'none' }}><WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} precipitation={this.state.precipitation} date={this.state.date}/></Link> : <p>{this.state.error}</p>}
+        {this.state.error === '' ? <Link to="/weather" style={{ textDecoration: 'none' }}><WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} rain={this.state.rain} date={this.state.date} snow={this.state.snow}/></Link> : <p>{this.state.error}</p>}
       </>     
     )
   }
