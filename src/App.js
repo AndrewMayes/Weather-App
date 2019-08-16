@@ -3,7 +3,7 @@ import Form from './components/Form';
 import axios from 'axios';
 import WeatherCard from './components/WeatherCard';
 import './index.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -106,7 +106,7 @@ class App extends Component {
           {/*Print state if country is US. Print country otherwise*/}
           {(this.state.error === '' && this.state.country === 'US') ? <Paper><p>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <Paper><p>{this.state.city}, {this.state.country}</p></Paper>}
         </div>
-        {this.state.error === '' ? <Link to="/weather" style={{ textDecoration: 'none' }}><WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} rain={this.state.rain} date={this.state.date} snow={this.state.snow}/></Link> : <p>{this.state.error}</p>}
+        {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} rain={this.state.rain} date={this.state.date} snow={this.state.snow}/> : <p>{this.state.error}</p>}
       </>     
     )
   }

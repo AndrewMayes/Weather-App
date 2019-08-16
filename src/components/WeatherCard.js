@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import sunnyImg from '../imgs/sunny.svg';
 import rainyImg from '../imgs/rainy.svg';
 import snowyImg from '../imgs/snowy.svg';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -50,16 +51,18 @@ const Weather = ({temp, city, country, unit, onClick, rain, date, snow}) => {
   }
 
   return (
-      <Grid container spacing={0} alignItems="center" justify="center" onClick={onClick}>
+      <Grid container spacing={0} alignItems="center" justify="center">
         <Grid item xs={12}>
           <Grid container justify="center" spacing={4}>
             {days.map((day, index) => (
-              <Grid key={day} item>
-                <Paper className={classes.paper}>
-                  <p>{setStartingDate(days)[index]}</p>
-                  {precipitation(rain[index], snow[index])}
-                  <p>{temp[index]} &#176; {(unit === 'I') ? 'F' : 'C'}</p>
-                </Paper>
+              <Grid key={setStartingDate(days)[index]} item>
+                <Link to={`/weather/${setStartingDate(days)[index]}`} style={{ textDecoration: 'none' }}>
+                  <Paper className={classes.paper} onClick={onClick}>
+                    <p>{setStartingDate(days)[index]}</p>
+                    {precipitation(rain[index], snow[index])}
+                    <p>{temp[index]} &#176; {(unit === 'I') ? 'F' : 'C'}</p>
+                  </Paper>
+                </Link>
               </Grid>
             ))}
           </Grid>
