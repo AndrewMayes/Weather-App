@@ -85,6 +85,7 @@ export default class Form extends Component {
             onChange={this.onChange}
             value={this.state.city}
             name="city"
+            required
           />
           <RedditTextField
             label="Country Name"
@@ -94,6 +95,7 @@ export default class Form extends Component {
             onChange={this.onChange}
             value={this.state.country}
             name="country"
+            required
           />
           </div>
           <div className="centerButton">

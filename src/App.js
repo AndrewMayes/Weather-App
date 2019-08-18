@@ -24,7 +24,8 @@ class App extends Component {
 
   getWeather = (city, country) => {
     const unit = this.state.unit;
-    axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city},${country}&key=${API_KEY}&days=7&units=${unit}`)
+    const searchCountry = country.toUpperCase();
+    axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?city=${city},${searchCountry}&key=${API_KEY}&days=7&units=${unit}`)
       .then(res => {
         const data = res.data;
         const days = data.data;
