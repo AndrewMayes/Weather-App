@@ -56,7 +56,7 @@ const Weather = ({temp, city, country, unit, onClick, rain, date, snow}) => {
           <Grid container justify="center" spacing={4}>
             {days.map((day, index) => (
               <Grid key={setStartingDate(days)[index]} item>
-                <Link to={`/weather/${setStartingDate(days)[index]}`} style={{ textDecoration: 'none' }}>
+                <Link to={`/${setStartingDate(days)[index]}`} style={{ textDecoration: 'none' }}>
                   <Paper className={classes.paper} onClick={onClick}>
                     <p>{setStartingDate(days)[index]}</p>
                     {precipitation(rain[index], snow[index])}

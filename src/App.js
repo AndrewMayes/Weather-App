@@ -5,6 +5,7 @@ import WeatherCard from './components/WeatherCard';
 import './index.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
+import IndividualDay from './components/IndividualDay';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -105,7 +106,7 @@ class App extends Component {
         </div>
         <div className="resultLocation">
           {/*Print state if country is US. Print country otherwise*/}
-          {(this.state.error === '' && this.state.country === 'US') ? <Paper><p>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <Paper><p>{this.state.city}, {this.state.country}</p></Paper>}
+          {(this.state.error === '' && this.state.country === 'US') ? <Paper><p style={{padding: 5}}>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <Paper><p>{this.state.city}, {this.state.country}</p></Paper>}
         </div>
         {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} rain={this.state.rain} date={this.state.date} snow={this.state.snow}/> : <p>{this.state.error}</p>}
       </>     
@@ -118,6 +119,7 @@ const Home = () => {
   <Router>
     <Switch>
       <Route exact path="/" component={App}/>
+      <Route path="/:day" render={(props) => <IndividualDay {...props} />}/>
     </Switch>
   </Router>
   )

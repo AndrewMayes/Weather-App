@@ -88,7 +88,7 @@ export default class Form extends Component {
             required
           />
           <RedditTextField
-            label="Country Name"
+            label="Country / State Name"
             className={this.useStyles.margin}
             variant="filled"
             id="reddit-input"
