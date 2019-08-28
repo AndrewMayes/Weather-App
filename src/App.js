@@ -106,7 +106,7 @@ class App extends Component {
         </div>
         <div className="resultLocation">
           {/*Print state if country is US. Print country otherwise*/}
-          {(this.state.error === '' && this.state.country === 'US') ? <Paper><p style={{padding: 5}}>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <Paper><p>{this.state.city}, {this.state.country}</p></Paper>}
+          {(this.state.error === '' && this.state.country === 'US') ? <Paper><p style={{padding: 5}}>{this.state.city}, {this.state.state}</p></Paper> : this.state.error === '' && <Paper><p style={{padding: 5}}>{this.state.city}, {this.state.country}</p></Paper>}
         </div>
         {this.state.error === '' ? <WeatherCard temp={this.state.temperature} city={this.state.city} country={this.state.country} unit={this.state.unit} onClick={this.moreWeather} rain={this.state.rain} date={this.state.date} snow={this.state.snow}/> : <p>{this.state.error}</p>}
       </>     
